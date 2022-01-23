@@ -1,0 +1,22 @@
+*{
+    margin:0px;
+    padding:0px;
+}
+
+.form-group{
+    font-size: 20px;
+    margin: 150px;
+    height: 500px;
+    width: 1000px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+
+
+.workerList{
+    margin: 5px;
+    display: inline-block;
+}

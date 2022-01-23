@@ -1,0 +1,46 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Registration</title>
+    {% load static %}
+    <link rel='stylesheet' href="{% static 'css/index_style.css' %}">
+</head>
+<body>
+    <div class=messages>
+    {% if messages %}
+    <ul class="messages">    
+        {% for message in messages %}    
+            <li>{{ message }}</li>    
+        {% endfor %}
+    </ul>
+    {% endif %}
+    </div>
+
+    <div id=wrapper>
+    <div class=register>
+    <h2>Register</h2>
+    <form action='create/' method='POST'>
+    {%csrf_token%}
+    <p>First Name: <input name='first_name' type='text'></p>
+    <p>Last Name: <input name='last_name' type='text'></p>
+    <P>Email: <input name='email' type='text'></P>
+    <P>Password: <input name='password' type='password'></P>
+    <P>Confirm PW: <input name='confirm' type='password'></P>
+    <P><button name='register' type="submit">Register</button></P>
+    </form>
+    </div>
+
+    <div class=login>
+    <h2>Login</h2>
+    <form action='signin' method='POST'>
+    {%csrf_token%}
+    <P>Email: <input name='email' type='text'></P>
+    <P>Password: <input name='password' type='password'></P>
+    <P><button name='login' type="submit">Login</button></P>
+    </form>
+    </div>
+    </div>
+</body>
+</html>

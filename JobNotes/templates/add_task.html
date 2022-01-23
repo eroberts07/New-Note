@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add a new Task</title>
+</head>
+<body>
+    {% if messages %}
+    <ul class="alert alert-primary" role='alert'>    
+        {% for message in messages %}    
+            <li>{{ message }}</li>    
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <div class='form-group'>
+        <form action='create_task' method='POST'>
+            {%csrf_token%}
+            <h2>Add new Task</h2>
+            <p>Task Name:</p>
+            <input name="name" type="text">
+            <p>Description:</p>
+            <p>(Optional)</p>
+            <input name="description" type="text">
+            <p>Time started:</p>
+            <input name="timein" type="time">
+            <p>Time ended:</p>
+            <input name="timeout" type="time">
+            <button name="add" type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,57 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+#wrapper{
+    margin: auto;
+    width: 700px;
+    height: 300px;
+    display: flex;
+    flex-direction:row;
+    align-items: center;
+}
+
+.register{
+    margin: auto;
+    padding: 20px;
+    border: solid black 2px;
+}
+
+.register h2{
+    color: blue;
+    margin: 5px;
+}
+
+.register p{
+    margin: 10px;
+}
+
+.login{
+    margin: auto;
+    padding: 20px;
+    padding-top: 63px;
+    padding-bottom: 63px;
+    border: solid black 2px;
+}
+
+.login h2{
+    color: blue;
+    margin: 5px;
+}
+
+.login p{
+    margin: 10px;
+}
+
+.messages{
+    margin: auto;
+    margin-top: 200;
+    width: 200px;
+    height: 100px;
+    font-size: large;
+    color: red;
+}
+
+
+

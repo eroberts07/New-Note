@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>{{job.title}} Page</title>
+</head>
+<body>
+    <div class='mx-auto' style='width: 500px;'> 
+    <p>{{job.title}}</p>
+    <p>{{job.description}}</p>
+    <p>Location: {{job.location}}</p>
+    <p>Posted by: {{job.uploader.first_name}}</p>
+    <p>Posted on: {{job.created_at}}</p>
+    <p>Tasks:</p>
+    {% for task in job.tasks.all %}
+        <ul>
+            <li>{{ task.name }} | {{ task.timein }} - {{ task.timeout }}</li>
+        </ul>
+    {% endfor %}
+    <a href='/jobs/{{job.id}}/add_job/'>Make Active</a> |
+    <a href='/jobs/{{job.id}}/remove_job/'>Archive</a> |
+    <button><a href="logout">Logout</a></button> |
+    <button><a href='/jobs'>Dashboard</a></button>
+    </div>
+</body>
+</html>
