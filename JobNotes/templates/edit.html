@@ -16,15 +16,15 @@
         </ul>
     {% endif %}
     <div class=edit>
-    <form action="/jobs/{{this_job.id}}/update" method="POST">
+    <form action="/jobs/{{ this_job.id }}/update" method="POST">
         {%csrf_token%}
         <h2>Edit Job</h2>
         <p>Title: </p>
-        <input value='{{this_job.title}}' name='title' type='text'>
+        <input value='{{ this_job.title }}' name='title' type='text'>
         <p>Description: </p>
-        <input value='{{this_job.description}}' name='description' type='text'>
+        <input value='{{ this_job.description }}' name='description' type='text'>
         <p>Location: </p>
-        <input value='{{this_job.location}}' name='location' type='text'>
+        <input value='{{ this_job.location }}' name='location' type='text'>
         <button name='submit' type='submit'>Update</button>
     </div>
     </form>

@@ -79,6 +79,7 @@ def update(request, job_id):
         this_job.description=request.POST['description'],
         this_job.location=request.POST['location'],
         this_job.uploader=this_user
+        this_job.save();
         return redirect('/jobs')
 
 def delete(request, job_id):
@@ -127,7 +128,6 @@ def create_job(request):
             vehicles=request.POST['vehicles'],
             equipment=request.POST['equipment'],
             uploader=this_user)
-        
         return redirect('/jobs')
 
 def addjob(request):
@@ -144,7 +144,7 @@ def newTask(request, job_id):
 def editTask(request, task_id):
     if 'user_id' not in request.session:
         return redirect('/')
-    this_task=Job.objects.get(id=task_id)
+    this_task=Task.objects.get(id=task_id)
     context={
         'this_task':this_task
     }
@@ -155,7 +155,8 @@ def updateTask(request, task_id):
         this_task.name=request.POST['name'],
         this_task.description=request.POST['description'],
         this_task.timein=request.POST['timein'],
-        this_task.timeout=request.POST['timeout']
+        this_task.timeout=request.POST['timeout'],
+        this_task.save();
         return redirect('/jobs')
 
 def createTask(request, job_id):

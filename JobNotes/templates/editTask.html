@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title></title>
 </head>
 <body>
@@ -15,7 +16,7 @@
         </ul>
     {% endif %}
     <div class=edit>
-        <form action="/jobs/{{this_task.id}}/updateTask" method="POST">
+        <form action="/jobs/{{ this_task.id }}/updateTask" method="POST">
             {%csrf_token%}
             <h2>Edit Task</h2>
         <p>Name: </p>
@@ -27,7 +28,7 @@
         <p>Time ended:</p>
         <input value='{{ this_task.timeout }}' name="timeout" type="time">
         <br>
-        <button name='submit' type='submit'>Update</button>
+        <button name='update' type='submit'>Update</button>
     </div>
     <button><a href='/jobs'>Cancel</a></button>
     <button><a href="/logout">Logout</a></button>
