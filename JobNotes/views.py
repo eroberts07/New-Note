@@ -75,11 +75,11 @@ def update(request, job_id):
     else:
         this_user=User.objects.get(id = request.session['user_id'])
         this_job=Job.objects.get(id=job_id)
-        this_job.title=request.POST['title'],
-        this_job.description=request.POST['description'],
-        this_job.location=request.POST['location'],
+        this_job.title=request.POST['title']
+        this_job.description=request.POST['description']
+        this_job.location=request.POST['location']
         this_job.uploader=this_user
-        this_job.save();
+        this_job.save()
         return redirect('/jobs')
 
 def delete(request, job_id):
@@ -152,11 +152,11 @@ def editTask(request, task_id):
 
 def updateTask(request, task_id):
         this_task=Task.objects.get(id=task_id)
-        this_task.name=request.POST['name'],
-        this_task.description=request.POST['description'],
-        this_task.timein=request.POST['timein'],
-        this_task.timeout=request.POST['timeout'],
-        this_task.save();
+        this_task.name=request.POST['name']
+        this_task.description=request.POST['description']
+        this_task.timein=request.POST['timein']
+        this_task.timeout=request.POST['timeout']
+        this_task.save()
         return redirect('/jobs')
 
 def createTask(request, job_id):
