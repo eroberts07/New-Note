@@ -1,9 +1,13 @@
 from email.utils import format_datetime
 from django.db import models
 from django import forms
+import datetime
 import re
+from django.core.exceptions import ValidationError
 from django.db.models.deletion import CASCADE
 import bcrypt
+
+valid_time_formats = ['%H:%M', '%I:%M%p', '%I:%M %p','""']
 
 class UserManager(models.Manager):
     def register_validator(self, PostData):
@@ -12,7 +16,7 @@ class UserManager(models.Manager):
             errors['first_name']='Name is required'
             
         if  PostData['first_name'].isalpha() == False:
-            errors['first_name']='Please ender only letters for your name.'
+            errors['first_name']='Please enter only letters for your name.'
 
         if len(PostData['password'])<8:
             errors['password']='Your password must be at least 8 characters'
@@ -58,6 +62,15 @@ class JobManager(models.Manager):
         elif len(PostData['title'])<3:
             errors['title']='Title must be 3 characters long'
         
+        if PostData['workers']== False:
+            errors['workers']='Please specify the number of workers'
+        
+        if PostData['vehicles']== False:
+            errors['vehicles']='Please specify the number of vehicles'
+
+        if PostData['equipment']== False:
+            errors['equipment']='Please provide at least one equipment used'
+        
         if len(PostData['description'])<1:
             errors['description']='Description is required'
         
@@ -69,6 +82,19 @@ class JobManager(models.Manager):
         
         elif len(PostData['location'])<3:
             errors['location']='Location must be at least 3 characters long'
+        return errors
+
+class TaskManager(models.Model):
+    def task_validator(self, PostData):
+        errors={};
+        if len(PostData['name']<1):
+            errors['name']='Name is required'
+        
+        if PostData['timein'].invalid():
+            errors['timein']='Please specify when the task started'
+        
+        if PostData['timeout'].invalid():
+            errors['timeout']='Please specify when the task ended'
         return errors
 
 class User(models.Model):
@@ -98,17 +124,22 @@ class Task(models.Model):
     timeout=models.TimeField(blank=True, null=True)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
+    objects=TaskManager()
+
+class Active(models.Model):
+    created_at=models.DateTimeField(auto_now_add=True)
+    updated_at=models.DateTimeField(auto_now=True)
 
 class Job(models.Model):
     title=models.CharField(max_length=255)
-    date=models.DateField(default=0)
+    date=models.DateField(default=datetime.date.today())
     description=models.TextField()
     location=models.CharField(max_length=255)
     uploader=models.ForeignKey(User, related_name='jobs_uploaded', on_delete=CASCADE)
     workers=models.IntegerField()
     vehicles=models.IntegerField()
     equipment=models.CharField(max_length=255)
-    my_jobs=models.ManyToManyField(User, related_name='active_jobs')
+    active_jobs=models.ManyToManyField(Active, related_name='active_jobs')
     #vehicles=models.ManyToManyField(Vehicle, related_name='vehicles', blank=True)
     #equipment=models.ManyToManyField(Equipment, related_name='equipment_used')
     tasks=models.ManyToManyField(Task,related_name='active_tasks')

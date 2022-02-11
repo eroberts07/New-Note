@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .models import User, Job, Vehicle, Equipment, Task
+from .models import User, Job, Vehicle, Equipment, Task, Active
 from django.db import transaction
 import bcrypt
 
@@ -39,25 +39,25 @@ def jobs(request):
     if 'user_id' not in request.session:
         return redirect('/')
     this_user=User.objects.filter(id = request.session['user_id'])
-    
-
+    active=Active.objects.get(id=1)
     context={
         'user': this_user[0],
         'all_the_jobs':Job.objects.all(),
-        'all_the_tasks':Task.objects.all()
+        'all_the_tasks':Task.objects.all(),
+        'active': active
     }
     return render(request,'jobs.html', context)
 
 def add_job(request, job_id):
-    this_user=User.objects.get(id= request.session['user_id'])
+    active=Active.objects.get(id=1)
     this_job=Job.objects.get(id=job_id)
-    this_user.active_jobs.add(this_job)
+    active.active_jobs.add(this_job)
     return redirect('/jobs')
 
 def remove_job(request, job_id):
-    this_user=User.objects.get(id= request.session['user_id'])
+    active=Active.objects.get(id=1)
     this_job=Job.objects.get(id=job_id)
-    this_user.active_jobs.remove(this_job)
+    active.active_jobs.remove(this_job)
     return redirect('/jobs')
 
 

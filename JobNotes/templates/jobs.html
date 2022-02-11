@@ -5,6 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    {% load static %}
+    <link rel="icon" href="{% static '/img/favicon.ico' %}" type="image/x-icon">
     <title>Jobs Dashboard</title>
 </head>
 <body>
@@ -25,7 +27,7 @@
                 <th scope='row'>Actions</th>
             </thead>
             <tbody>
-                {% for job in user.active_jobs.all %}
+                {% for job in active.active_jobs.all %}
                 <tr>
                     <td>{{job.date}}</td>
                     <td>{{job.title}}</td>
@@ -63,7 +65,7 @@
             <tbody>
                 
                     {% for job in all_the_jobs %}
-                        {% if job.my_jobs.all|length %}
+                        {% if job.active_jobs.all|length %}
                         {% else %}
                         <tr>
                             <td>{{ job.title }}</td>
