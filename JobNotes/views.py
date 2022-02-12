@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .models import User, Job, Vehicle, Equipment, Task, Active
+from .models import User, Job, Vehicle, Equipment, Task
 from django.db import transaction
 import bcrypt
 
@@ -39,25 +39,21 @@ def jobs(request):
     if 'user_id' not in request.session:
         return redirect('/')
     this_user=User.objects.filter(id = request.session['user_id'])
-    active=Active.objects.get(id=1)
     context={
         'user': this_user[0],
         'all_the_jobs':Job.objects.all(),
-        'all_the_tasks':Task.objects.all(),
-        'active': active
+        'all_the_tasks':Task.objects.all()
     }
     return render(request,'jobs.html', context)
 
 def add_job(request, job_id):
-    active=Active.objects.get(id=1)
     this_job=Job.objects.get(id=job_id)
-    active.active_jobs.add(this_job)
+    this_job.active == True;
     return redirect('/jobs')
 
 def remove_job(request, job_id):
-    active=Active.objects.get(id=1)
     this_job=Job.objects.get(id=job_id)
-    active.active_jobs.remove(this_job)
+    this_job.active == False;
     return redirect('/jobs')
 
 
@@ -82,12 +78,12 @@ def update(request, job_id):
         this_job.save()
         return redirect('/jobs')
 
-def delete(request, job_id):
+def delete(job_id):
     this_job=Job.objects.get(id=job_id)
     this_job.delete()
     return redirect('/jobs')
 
-def deleteTask(request, task_id):
+def deleteTask(task_id):
     this_task=Task.objects.get(id=task_id)
     this_task.delete()
     return redirect('/jobs')
@@ -124,17 +120,29 @@ def create_job(request):
             date=request.POST['date'],
             description=request.POST['description'],
             location=request.POST['location'],
-            workers=request.POST['workers'],
-            vehicles=request.POST['vehicles'],
-            equipment=request.POST['equipment'],
             uploader=this_user)
-        return redirect('/jobs')
+        new_job.active == True;
+        return redirect(f'/jobs/new/{new_job.id}/add_job2')
+
+
+def add_job2(request, job_id):
+    this_job=Job.objects.get(id=job_id)
+    context={
+        'this_job':this_job,
+        'all_vehicles':Vehicle.objects.all(),
+        'all_users':User.objects.all()
+    }
+    return render(request,'add_job_2.html', context)
+
+def create_job2(request, job_id, user_id, vehicle_id):
+    this_job=Job.objects.get(id=job_id)
+    this_vehicle=Job.objects.get(id=vehicle_id)
+    this_user-User.objects.get(id=user_id)
+
+    return redirect()
 
 def addjob(request):
-    #context={
-        #'all_users':User.objects.all,
-        #'all_vehicles':Vehicle.objects.all
-    #}
+
     return render(request,'add_job.html')
 
 def newTask(request, job_id):
@@ -170,7 +178,7 @@ def createTask(request, job_id):
     )
     return redirect(f'/jobs/{this_job.id}/{new_task.id}/add_task/')
 
-def add_task(request, job_id,task_id):
+def add_task(job_id,task_id):
     this_task=Task.objects.get(id=task_id)
     this_job=Job.objects.get(id=job_id)
     this_job.tasks.add(this_task)

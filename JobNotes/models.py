@@ -62,15 +62,6 @@ class JobManager(models.Manager):
         elif len(PostData['title'])<3:
             errors['title']='Title must be 3 characters long'
         
-        if PostData['workers']== False:
-            errors['workers']='Please specify the number of workers'
-        
-        if PostData['vehicles']== False:
-            errors['vehicles']='Please specify the number of vehicles'
-
-        if PostData['equipment']== False:
-            errors['equipment']='Please provide at least one equipment used'
-        
         if len(PostData['description'])<1:
             errors['description']='Description is required'
         
@@ -126,22 +117,16 @@ class Task(models.Model):
     updated_at=models.DateTimeField(auto_now=True)
     objects=TaskManager()
 
-class Active(models.Model):
-    created_at=models.DateTimeField(auto_now_add=True)
-    updated_at=models.DateTimeField(auto_now=True)
-
 class Job(models.Model):
     title=models.CharField(max_length=255)
     date=models.DateField(default=datetime.date.today())
     description=models.TextField()
     location=models.CharField(max_length=255)
     uploader=models.ForeignKey(User, related_name='jobs_uploaded', on_delete=CASCADE)
-    workers=models.IntegerField()
-    vehicles=models.IntegerField()
-    equipment=models.CharField(max_length=255)
-    active_jobs=models.ManyToManyField(Active, related_name='active_jobs')
-    #vehicles=models.ManyToManyField(Vehicle, related_name='vehicles', blank=True)
-    #equipment=models.ManyToManyField(Equipment, related_name='equipment_used')
+    active=models.BooleanField(default=True)
+    workers=models.ManyToManyField(User, related_name='workers', blank=True)
+    vehicles=models.ManyToManyField(Vehicle, related_name='vehicles', blank=True)
+    equipment=models.ManyToManyField(Equipment, related_name='equipment_used')
     tasks=models.ManyToManyField(Task,related_name='active_tasks')
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
