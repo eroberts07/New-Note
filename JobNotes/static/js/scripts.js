@@ -1,3 +1,4 @@
+
 $(document).ready(function(){
     var maxField = 10; //Input fields increment limitation
     var addButton = $('.add_button'); //Add button selector
@@ -22,9 +23,18 @@ $(document).ready(function(){
     });
 });
 
-document.getElementById('vehicles').onclick = function() {
+document.getElementById('select').onclick = function(param) {
+    var url = window.location.href;
+    var parsed_url = url.split('?');
     var checkboxes = document.querySelectorAll('input[name="vehicles"]:checked');
     for (var checkbox of checkboxes) {
-        add_vehicle();
+        checkbox.value = param;
+        newUrl = parsed_url + param + '/add_vehicle';
+        getUrl(newUrl);
     }
 }
+
+function getUrl(url){
+    var req = new XMLHttpRequest(url)
+}
+

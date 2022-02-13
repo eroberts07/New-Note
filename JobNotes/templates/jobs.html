@@ -33,9 +33,15 @@
                     <td>{{job.date}}</td>
                     <td>{{job.title}}</td>
                     <td>{{job.description}}</td>
-                    <td>{{job.workers}}</td>
                     <td>
-                        {% for vehicle in job.vehicles.all %}
+                        {% for worker in job.workers.all %}
+                        <ul>
+                        <li>{{ worker.fist_name }}{{ worker.last_name }}</li>
+                        </ul>
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for vehicle in all_vehicles %}
                         <ul>
                         <li>{{ vehicle.name }}</li>
                         </ul>

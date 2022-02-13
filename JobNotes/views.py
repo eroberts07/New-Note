@@ -42,7 +42,8 @@ def jobs(request):
     context={
         'user': this_user[0],
         'all_the_jobs':Job.objects.all(),
-        'all_the_tasks':Task.objects.all()
+        'all_the_tasks':Task.objects.all(),
+        'all_vehicles':Vehicle.objects.all()
     }
     return render(request,'jobs.html', context)
 
@@ -132,7 +133,7 @@ def add_job2(request, job_id):
     context={
         'this_job':this_job,
         'all_vehicles':Vehicle.objects.all(),
-        'all_users':User.objects.all()
+        'all_users':User.objects.all(),
     }
     return render(request,'add_job_2.html', context)
 
@@ -147,6 +148,7 @@ def add_vehicle(vehicle_id, job_id):
     this_vehicle=Job.objects.get(id=vehicle_id)
     this_job=Job.objects.get(id=job_id)
     this_job.vehicles.add(this_vehicle)
+    print('Adding Exectuted')
     return redirect('/jobs')
 
 

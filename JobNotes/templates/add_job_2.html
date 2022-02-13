@@ -10,7 +10,7 @@
     <title>Add Logistics</title>
 </head>
 <body>
-    <form action='add_vehicles' method='POST'>
+    <form action='?/add_vehicles/' method='POST'>
         {%csrf_token%}
     <p>Select Technicians: </p>
     {%for user in all_users %}
@@ -20,7 +20,7 @@
     {% endfor %}
         <p>Select Vehicles:</p>
     {%for vehicle in all_vehicles %}
-            <p><input name='vehicles' id='select' type='checkbox' value = '{{ vehicle.id }}'>{{ vehicle.name }}</p>
+            <p><input name='vehicles' id='select' type='checkbox' value = 'Guzzler'>{{ vehicle.name }}</p>
     {% endfor %}
     <p>Equipment used:</p>
             <div class='eqipmentList'>
