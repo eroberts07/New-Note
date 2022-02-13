@@ -10,15 +10,17 @@
     <title>Add Logistics</title>
 </head>
 <body>
+    <form action='add_vehicles' method='POST'>
+        {%csrf_token%}
     <p>Select Technicians: </p>
     {%for user in all_users %}
             <div class='workerList'>
-                <input name='workers' type='checkbox' value='{{ user.id }}'> {{ user.first_name }} {{ user.last_name }}
+                <input id='workers' type='checkbox' value='{{ user.id }}'> {{ user.first_name }} {{ user.last_name }}
             </div>
     {% endfor %}
         <p>Select Vehicles:</p>
     {%for vehicle in all_vehicles %}
-            <p><input name='vehicles' type='checkbox' value = '{{ vehicle.id }}'>{{ vehicle.name }}</p>
+            <p><input name='vehicles' id='select' type='checkbox' value = '{{ vehicle.id }}'>{{ vehicle.name }}</p>
     {% endfor %}
     <p>Equipment used:</p>
             <div class='eqipmentList'>
@@ -33,6 +35,15 @@
                         <button><a href="javascript:void(0);" class="add_button" title="Add field">Add Field</a></button>
                     </div>
                 </div>
+    <button id="select" type="submit">Add</button>
+
+    <input type="hidden" id="vehicle">
+    <input type="hidden" id="workers">
+    <input type="hidden" id="equipment">
+</form>
+
+
+
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="{% static 'js/scripts.js' %}"></script>

@@ -22,6 +22,9 @@ $(document).ready(function(){
     });
 });
 
-$(":checkbox").change(function(){
-    var x = document.getElementById().value;
-});
+document.getElementById('vehicles').onclick = function() {
+    var checkboxes = document.querySelectorAll('input[name="vehicles"]:checked');
+    for (var checkbox of checkboxes) {
+        add_vehicle();
+    }
+}

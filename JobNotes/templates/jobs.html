@@ -27,13 +27,20 @@
                 <th scope='row'>Actions</th>
             </thead>
             <tbody>
-                {% for job in job.active.all %}
+                {% for job in all_the_jobs %}
+                {% if job.active == True %}
                 <tr>
                     <td>{{job.date}}</td>
                     <td>{{job.title}}</td>
                     <td>{{job.description}}</td>
                     <td>{{job.workers}}</td>
-                    <td>{{job.vehicles}}</td>
+                    <td>
+                        {% for vehicle in job.vehicles.all %}
+                        <ul>
+                        <li>{{ vehicle.name }}</li>
+                        </ul>
+                        {% endfor %}
+                    </td>
                     
                     <td>
                         {% for task in job.tasks.all %}
@@ -51,6 +58,7 @@
                         <a href='/jobs/{{job.id}}/new_task/'>Add new task </a>
                     </td>
                 </tr>
+                {% endif %}
                 {% endfor %}
             </tbody>
         </table>
@@ -65,11 +73,10 @@
             <tbody>
                 
                     {% for job in all_the_jobs %}
-                        {% if job.active.all|length %}
-                        {% else %}
+                        {% if job.active == False %}
                         <tr>
                             <td>{{ job.title }}</td>
-                            <td>{{job.location}}</td>
+                            <td>{{ job.location }}</td>
                         <td>
                                 {% if user == job.uploader %}
                                 <a href='/jobs/{{job.id}}/edit'>Edit</a> |

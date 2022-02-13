@@ -48,12 +48,14 @@ def jobs(request):
 
 def add_job(request, job_id):
     this_job=Job.objects.get(id=job_id)
-    this_job.active == True;
+    this_job.active = True;
+    this_job.save()
     return redirect('/jobs')
 
 def remove_job(request, job_id):
     this_job=Job.objects.get(id=job_id)
-    this_job.active == False;
+    this_job.active = False;
+    this_job.save()
     return redirect('/jobs')
 
 
@@ -140,6 +142,13 @@ def create_job2(request, job_id, user_id, vehicle_id):
     this_user-User.objects.get(id=user_id)
 
     return redirect()
+
+def add_vehicle(vehicle_id, job_id):
+    this_vehicle=Job.objects.get(id=vehicle_id)
+    this_job=Job.objects.get(id=job_id)
+    this_job.vehicles.add(this_vehicle)
+    return redirect('/jobs')
+
 
 def addjob(request):
 
